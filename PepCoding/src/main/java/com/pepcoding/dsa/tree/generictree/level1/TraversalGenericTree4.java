@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class FindInGenericTree {
+public class TraversalGenericTree4 {
 	private static class Node {
 		int data;
 		ArrayList<Node> children = new ArrayList<>();
@@ -48,16 +48,53 @@ public class FindInGenericTree {
 		return root;
 	}
 
-	public static boolean find(Node node, int data) {
-		if(node.data==data)
-			return true;
-		
+	public static int size(Node node) {
+		int s = 0;
+
 		for (Node child : node.children) {
-			boolean fic=find(child,data);
-			if(fic)
-				return true;
+			s += size(child);
 		}
-		return false;
+		s += 1;
+
+		return s;
+	}
+
+	public static int max(Node node) {
+		int m = Integer.MIN_VALUE;
+
+		for (Node child : node.children) {
+			int cm = max(child);
+			m = Math.max(m, cm);
+		}
+		m = Math.max(m, node.data);
+
+		return m;
+	}
+
+	public static int height(Node node) {
+		int h = -1;
+
+		for (Node child : node.children) {
+			int ch = height(child);
+			h = Math.max(h, ch);
+		}
+		h += 1;
+
+		return h;
+	}
+
+	public static void traversals(Node node) {
+		// euler's left ,on the way deep in the recursion ,node's pre area
+		System.out.println("Node Pre" + node.data);
+		for (Node child : node.children) {
+			// edge pre
+			System.out.println("Edge Pre" + node.data + "--" + child.data);
+			traversals(child);
+			// edge post
+			System.out.println("Edge Post" + node.data + "--" + child.data);
+		}
+		// euler's right ,on the way out of recursion ,node's post area
+		System.out.println("Node Post" + node.data);
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -69,12 +106,8 @@ public class FindInGenericTree {
 			arr[i] = Integer.parseInt(values[i]);
 		}
 
-		int data = Integer.parseInt(br.readLine());
-
 		Node root = construct(arr);
-		boolean flag = find(root, data);
-		System.out.println(flag);
-		// display(root);
+		traversals(root);
 	}
 
 }

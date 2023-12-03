@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class LowestCommonAncestorGenericTree {
+public class NodeToRootPathGenericTree12 {
 	private static class Node {
 		int data;
 		ArrayList<Node> children = new ArrayList<>();
@@ -49,38 +49,21 @@ public class LowestCommonAncestorGenericTree {
 	}
 
 	public static ArrayList<Integer> nodeToRootPath(Node node, int data) {
-		if (node.data == data) {
-			ArrayList<Integer> path = new ArrayList<>();
-			path.add(node.data);
-			return path;
+		if(node.data==data) {
+			ArrayList<Integer>list=new ArrayList<>();
+			list.add(node.data);
+			return list;
 		}
-
-		for (Node child : node.children) {
-			ArrayList<Integer> ptc = nodeToRootPath(child, data);
-			if (ptc.size() > 0) {
-				ptc.add(node.data);
-				return ptc;
+		
+		for(Node child:node.children) {
+			ArrayList<Integer>pathTillChild=nodeToRootPath(child, data);
+			if(pathTillChild.size()>0) {
+				pathTillChild.add(node.data);
+				return pathTillChild;
 			}
 		}
-
+		
 		return new ArrayList<>();
-	}
-
-	public static int lca(Node node, int d1, int d2) {
-		ArrayList<Integer> p1=nodeToRootPath(node,d1);
-		ArrayList<Integer> p2=nodeToRootPath(node, d2);
-		
-		int i=p1.size()-1;
-		int j=p2.size()-1;
-		
-		while(i>=0 && j>=0 && p1.get(i)==p2.get(j)) {
-			i--;
-			j--;
-		}
-		i++;
-		j++;
-		
-		return p1.get(i);
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -92,12 +75,11 @@ public class LowestCommonAncestorGenericTree {
 			arr[i] = Integer.parseInt(values[i]);
 		}
 
-		int d1 = Integer.parseInt(br.readLine());
-		int d2 = Integer.parseInt(br.readLine());
+		int data = Integer.parseInt(br.readLine());
 
 		Node root = construct(arr);
-		int lca = lca(root, d1, d2);
-		System.out.println(lca);
+		ArrayList<Integer> path = nodeToRootPath(root, data);
+		System.out.println(path);
 		// display(root);
 	}
 

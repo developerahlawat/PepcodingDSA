@@ -3,9 +3,10 @@ package com.pepcoding.dsa.tree.generictree.level1;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Stack;
 
-public class IsSymmetricGenericTree {
+public class MirrorGenericTree8 {
 	private static class Node {
 	    int data;
 	    ArrayList<Node> children = new ArrayList<>();
@@ -82,26 +83,56 @@ public class IsSymmetricGenericTree {
 
 	    return h;
 	  }
-	  
-	  public static boolean areMirror(Node n1, Node n2) {
-		    if(n1.children.size()!=n2.children.size()) 
-				   return false;
-			   
-			   for (int i = 0; i < n1.children.size(); i++) {
-				int j=n1.children.size()-1-i;
-				Node c1=n1.children.get(i);
-				Node c2=n2.children.get(j);
-				
-				if(areMirror(c1, c2)==false)
-					return false;
-				
-			   }
-			  	
-				return true;
-		  }
 
-	  public static boolean IsSymmetric(Node node) {
-	    return areMirror(node, node);
+	  public static void traversals(Node node){
+	    System.out.println("Node Pre " + node.data);
+
+	    for(Node child: node.children){
+	      System.out.println("Edge Pre " + node.data + "--" + child.data);
+	      traversals(child);
+	      System.out.println("Edge Post " + node.data + "--" + child.data);
+	    }
+
+	    System.out.println("Node Post " + node.data);
+	  }
+
+	  public static void levelOrderLinewiseZZ(Node node){
+	    Stack<Node> stack = new Stack<>();
+	    stack.add(node);
+
+	    Stack<Node> cstack = new Stack<>();
+	    int level = 0;
+
+	    while(stack.size() > 0){
+	      node = stack.pop();
+	      System.out.print(node.data + " ");
+
+	      if(level % 2 == 0){
+	        for(int i = 0; i < node.children.size(); i++){
+	          Node child = node.children.get(i);
+	          cstack.push(child);
+	        }
+	      } else {
+	        for(int i = node.children.size() - 1; i >= 0; i--){
+	          Node child = node.children.get(i);
+	          cstack.push(child);
+	        }
+	      }
+
+	      if(stack.size() == 0){
+	        stack = cstack;
+	        cstack = new Stack<>();
+	        level++;
+	        System.out.println();
+	      }
+	    }
+	  }
+
+	  public static void mirror(Node node){
+	   for (Node child : node.children) 
+		   mirror(child);
+	   
+	   Collections.reverse(node.children);
 	  }
 
 	  public static void main(String[] args) throws Exception {
@@ -114,9 +145,9 @@ public class IsSymmetricGenericTree {
 	    }
 
 	    Node root = construct(arr);
-	    boolean sym = IsSymmetric(root);
-	    System.out.println(sym);
-	    // display(root);
+	    display(root);
+	    mirror(root);
+	    display(root);
 	  }
 
 }

@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class SizeGenerictree {
+public class PredecessorSuccessorGenricTree18 {
 	private static class Node {
 		int data;
 		ArrayList<Node> children = new ArrayList<>();
@@ -48,15 +48,24 @@ public class SizeGenerictree {
 		return root;
 	}
 
-	public static int size(Node node) {
-		int s=0;
-		for (Node child : node.children) {
-			int cs=size(child);
-			s=s+cs;
+	static Node predecessor;
+	static Node successor;
+	static int state;
+
+	public static void predecessorAndSuccessor(Node node, int data) {
+		if (state == 0) {
+			if (node.data == data)
+				state = 1;
+			else
+				predecessor = node;
+		} else if (state == 1) {
+			successor = node;
+			state = 2;
 		}
-		s=s+1;
+
+		for(Node child : node.children) 
+			predecessorAndSuccessor(child, data);
 		
-		return s;
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -68,10 +77,23 @@ public class SizeGenerictree {
 			arr[i] = Integer.parseInt(values[i]);
 		}
 
+		int data = Integer.parseInt(br.readLine());
+
 		Node root = construct(arr);
-		int sz = size(root);
-		System.out.println(sz);
-		// display(root);
+		predecessor = null;
+		successor = null;
+		predecessorAndSuccessor(root, data);
+		if (predecessor == null) {
+			System.out.println("Predecessor = Not found");
+		} else {
+			System.out.println("Predecessor = " + predecessor.data);
+		}
+
+		if (successor == null) {
+			System.out.println("Successor = Not found");
+		} else {
+			System.out.println("Successor = " + successor.data);
+		}
 	}
 
 }

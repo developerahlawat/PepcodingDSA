@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Stack;
 
-public class MirrorGenericTree {
+public class LinearizeGenericTree10 {
 	private static class Node {
 	    int data;
 	    ArrayList<Node> children = new ArrayList<>();
@@ -84,10 +84,10 @@ public class MirrorGenericTree {
 	    return h;
 	  }
 
-	  public static void traversals(Node node){
+	  public static void traversals(Node node) {
 	    System.out.println("Node Pre " + node.data);
 
-	    for(Node child: node.children){
+	    for (Node child : node.children) {
 	      System.out.println("Edge Pre " + node.data + "--" + child.data);
 	      traversals(child);
 	      System.out.println("Edge Post " + node.data + "--" + child.data);
@@ -96,30 +96,30 @@ public class MirrorGenericTree {
 	    System.out.println("Node Post " + node.data);
 	  }
 
-	  public static void levelOrderLinewiseZZ(Node node){
+	  public static void levelOrderLinewiseZZ(Node node) {
 	    Stack<Node> stack = new Stack<>();
 	    stack.add(node);
 
 	    Stack<Node> cstack = new Stack<>();
 	    int level = 0;
 
-	    while(stack.size() > 0){
+	    while (stack.size() > 0) {
 	      node = stack.pop();
 	      System.out.print(node.data + " ");
 
-	      if(level % 2 == 0){
-	        for(int i = 0; i < node.children.size(); i++){
+	      if (level % 2 == 0) {
+	        for (int i = 0; i < node.children.size(); i++) {
 	          Node child = node.children.get(i);
 	          cstack.push(child);
 	        }
 	      } else {
-	        for(int i = node.children.size() - 1; i >= 0; i--){
+	        for (int i = node.children.size() - 1; i >= 0; i--) {
 	          Node child = node.children.get(i);
 	          cstack.push(child);
 	        }
 	      }
 
-	      if(stack.size() == 0){
+	      if (stack.size() == 0) {
 	        stack = cstack;
 	        cstack = new Stack<>();
 	        level++;
@@ -128,14 +128,46 @@ public class MirrorGenericTree {
 	    }
 	  }
 
-	  public static void mirror(Node node){
-	   for (Node child : node.children) 
-		   mirror(child);
-	   
-	   Collections.reverse(node.children);
+	  public static void mirror(Node node) {
+	    for (Node child : node.children) {
+	      mirror(child);
+	    }
+	    Collections.reverse(node.children);
 	  }
 
-	  public static void main(String[] args) throws Exception {
+	  public static void removeLeaves(Node node) {
+	    for (int i = node.children.size() - 1; i >= 0; i--) {
+	      Node child = node.children.get(i);
+	      if (child.children.size() == 0) {
+	        node.children.remove(i);
+	      }
+	    }
+
+	    for(Node child: node.children){
+	      removeLeaves(child);
+	    }
+	  }
+
+	  public static void linearize(Node node){
+	    for (Node child : node.children) 
+	    	linearize(child);
+	    
+	    while(node.children.size()>1){
+	    	Node lastChild=node.children.remove(node.children.size()-1);
+	    	Node secLastChild=node.children.get(node.children.size()-1);
+	    	Node secLastTail=getTail(secLastChild);
+	    	secLastTail.children.add(lastChild);
+	    }
+	  }
+
+	  private static Node getTail(Node node) {
+		while(node.children.size()==1)
+			node=node.children.get(0);
+		
+		return node;
+	}
+
+	public static void main(String[] args) throws Exception {
 	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	    int n = Integer.parseInt(br.readLine());
 	    int[] arr = new int[n];
@@ -145,9 +177,7 @@ public class MirrorGenericTree {
 	    }
 
 	    Node root = construct(arr);
-	    display(root);
-	    mirror(root);
+	    linearize(root);
 	    display(root);
 	  }
-
 }

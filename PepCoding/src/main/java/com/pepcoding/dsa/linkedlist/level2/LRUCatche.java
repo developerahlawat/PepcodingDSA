@@ -2,7 +2,7 @@ package com.pepcoding.dsa.linkedlist.level2;
 
 import java.util.HashMap;
 
-public class LcuCatche {
+public class LRUCatche {
 	class LRUCache {
 
         class Node {

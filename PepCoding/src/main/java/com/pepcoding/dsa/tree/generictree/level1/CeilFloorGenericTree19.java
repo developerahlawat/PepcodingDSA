@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class KLargestGenericTree {
+public class CeilFloorGenericTree19 {
 	private static class Node {
 	    int data;
 	    ArrayList<Node> children = new ArrayList<>();
@@ -52,32 +52,16 @@ public class KLargestGenericTree {
 	  static int ceil;
 	  static int floor;
 	  public static void ceilAndFloor(Node node, int data) {
-	    if(node.data > data){
-	      if(node.data < ceil){
-	        ceil = node.data;
-	      }
+	    if(node.data>data) {
+	    	if(node.data<ceil)
+	    		ceil=node.data;
+	    }else if(node.data<data) {
+	    	if(node.data>floor)
+	    		floor=node.data;
 	    }
-
-	    if(node.data < data){
-	      if(node.data > floor){
-	        floor = node.data;
-	      }
-	    }
-
-	    for (Node child : node.children) {
-	      ceilAndFloor(child, data);
-	    }
-	  }
-
-	  public static int kthLargest(Node node, int k){
-	   floor=Integer.MIN_VALUE;
-	   int factor=Integer.MAX_VALUE;
-	   for (int i=0;i<k;i++) {
-		   ceilAndFloor(node, factor);//will set floor
-		   factor=floor;
-		   floor=Integer.MIN_VALUE;
+		  for (Node child : node.children) {
+			  ceilAndFloor(child, data);
 		}
-	   return factor;
 	  }
 
 	  public static void main(String[] args) throws Exception {
@@ -89,11 +73,14 @@ public class KLargestGenericTree {
 	      arr[i] = Integer.parseInt(values[i]);
 	    }
 
-	    int k = Integer.parseInt(br.readLine());
+	    int data = Integer.parseInt(br.readLine());
 
 	    Node root = construct(arr);
-	    int kthLargest = kthLargest(root, k);
-	    System.out.println(kthLargest);
+	    ceil = Integer.MAX_VALUE;
+	    floor = Integer.MIN_VALUE;
+	    ceilAndFloor(root, data);
+	    System.out.println("CEIL = " + ceil);
+	    System.out.println("FLOOR = " + floor);
 	  }
 
 }

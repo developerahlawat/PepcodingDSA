@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class MaximumSubtreeSumGenericTree {
+public class HeightGenericTree3 {
 	private static class Node {
 	    int data;
 	    ArrayList<Node> children = new ArrayList<>();
@@ -47,24 +47,39 @@ public class MaximumSubtreeSumGenericTree {
 
 	    return root;
 	  }
-	  
-	  static int maxSumNode=0;
-	  static int maxSum=Integer.MIN_VALUE;
-	  static int retSumAndCalculateMSST(Node node) {
-		  int sum=0;
-		  
-		  for (Node child : node.children) {
-			int csum=retSumAndCalculateMSST(child);
-			sum+=csum;
+
+	  public static int size(Node node) {
+	    int s = 0;
+
+	    for (Node child : node.children) {
+	      s += size(child);
+	    }
+	    s += 1;
+
+	    return s;
+	  }
+
+	  public static int max(Node node) {
+	    int m = Integer.MIN_VALUE;
+
+	    for (Node child : node.children) {
+	      int cm = max(child);
+	      m = Math.max(m, cm);
+	    }
+	    m = Math.max(m, node.data);
+
+	    return m;
+	  }
+
+	  public static int height(Node node) {
+	    int ht=-1;// -1 for height using edge.0  for height using node
+	    for (Node child : node.children) {
+			int ch=height(child);
+			ht=Math.max(ch, ht);
 		}
-		  
-		  sum+=node.data;
-		  if(sum>maxSum) {
-			  maxSumNode=node.data;
-			  maxSum=sum;
-		  }
-		  
-		  return sum;
+	    ht+=1;
+	    
+	    return ht;
 	  }
 
 	  public static void main(String[] args) throws Exception {
@@ -77,8 +92,9 @@ public class MaximumSubtreeSumGenericTree {
 	    }
 
 	    Node root = construct(arr);
-	    retSumAndCalculateMSST(root);
-	    System.out.println(maxSumNode+"@"+maxSum);
+	    int h = height(root);
+	    System.out.println(h);
+	    // display(root);
 	  }
 
 }

@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class DistanceBetweenTwoNodesGenericTree {
+public class IsSymmetricGenericTree17 {
 	private static class Node {
 	    int data;
 	    ArrayList<Node> children = new ArrayList<>();
@@ -48,54 +48,60 @@ public class DistanceBetweenTwoNodesGenericTree {
 	    return root;
 	  }
 
-	  public static ArrayList<Integer> nodeToRootPath(Node node, int data) {
-	    if (node.data == data) {
-	      ArrayList<Integer> path = new ArrayList<>();
-	      path.add(node.data);
-	      return path;
-	    }
+	  public static int size(Node node) {
+	    int s = 0;
 
 	    for (Node child : node.children) {
-	      ArrayList<Integer> ptc = nodeToRootPath(child, data);
-	      if (ptc.size() > 0) {
-	        ptc.add(node.data);
-	        return ptc;
-	      }
+	      s += size(child);
 	    }
+	    s += 1;
 
-	    return new ArrayList<>();
+	    return s;
 	  }
 
-	  public static int lca(Node node, int d1, int d2) {
-	    ArrayList<Integer> p1 = nodeToRootPath(node, d1);
-	    ArrayList<Integer> p2 = nodeToRootPath(node, d2);
+	  public static int max(Node node) {
+	    int m = Integer.MIN_VALUE;
 
-	    int i = p1.size() - 1;
-	    int j = p2.size() - 1;
-
-	    while(i >= 0 && j >= 0 && p1.get(i) == p2.get(j)){
-	      i--;
-	      j--;
+	    for (Node child : node.children) {
+	      int cm = max(child);
+	      m = Math.max(m, cm);
 	    }
+	    m = Math.max(m, node.data);
 
-	    return p1.get(i + 1);
+	    return m;
 	  }
 
-	  public static int distanceBetweenNodes(Node node, int d1, int d2){
-		  ArrayList<Integer> p1=nodeToRootPath(node,d1);
-			ArrayList<Integer> p2=nodeToRootPath(node, d2);
-			
-			int i=p1.size()-1;
-			int j=p2.size()-1;
-			
-			while(i>=0 && j>=0 && p1.get(i)==p2.get(j)) {
-				i--;
-				j--;
-			}
-			i++;
-			j++;
-			
-			return i+j;
+	  public static int height(Node node) {
+	    int h = -1;
+
+	    for (Node child : node.children) {
+	      int ch = height(child);
+	      h = Math.max(h, ch);
+	    }
+	    h += 1;
+
+	    return h;
+	  }
+	  
+	  public static boolean areMirror(Node n1, Node n2) {
+		    if(n1.children.size()!=n2.children.size()) 
+				   return false;
+			   
+			   for (int i = 0; i < n1.children.size(); i++) {
+				int j=n1.children.size()-1-i;
+				Node c1=n1.children.get(i);
+				Node c2=n2.children.get(j);
+				
+				if(areMirror(c1, c2)==false)
+					return false;
+				
+			   }
+			  	
+				return true;
+		  }
+
+	  public static boolean IsSymmetric(Node node) {
+	    return areMirror(node, node);
 	  }
 
 	  public static void main(String[] args) throws Exception {
@@ -107,12 +113,9 @@ public class DistanceBetweenTwoNodesGenericTree {
 	      arr[i] = Integer.parseInt(values[i]);
 	    }
 
-	    int d1 = Integer.parseInt(br.readLine());
-	    int d2 = Integer.parseInt(br.readLine());
-
 	    Node root = construct(arr);
-	    int dist = distanceBetweenNodes(root, d1, d2);
-	    System.out.println(dist);
+	    boolean sym = IsSymmetric(root);
+	    System.out.println(sym);
 	    // display(root);
 	  }
 

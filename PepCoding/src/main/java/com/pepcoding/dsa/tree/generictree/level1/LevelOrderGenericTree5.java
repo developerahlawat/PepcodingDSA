@@ -2,10 +2,12 @@ package com.pepcoding.dsa.tree.generictree.level1;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Queue;
 import java.util.Stack;
 
-public class NodeToRootPathGenericTree {
+public class LevelOrderGenericTree5 {
 	private static class Node {
 		int data;
 		ArrayList<Node> children = new ArrayList<>();
@@ -48,22 +50,67 @@ public class NodeToRootPathGenericTree {
 		return root;
 	}
 
-	public static ArrayList<Integer> nodeToRootPath(Node node, int data) {
-		if(node.data==data) {
-			ArrayList<Integer>list=new ArrayList<>();
-			list.add(node.data);
-			return list;
+	public static int size(Node node) {
+		int s = 0;
+
+		for (Node child : node.children) {
+			s += size(child);
 		}
+		s += 1;
+
+		return s;
+	}
+
+	public static int max(Node node) {
+		int m = Integer.MIN_VALUE;
+
+		for (Node child : node.children) {
+			int cm = max(child);
+			m = Math.max(m, cm);
+		}
+		m = Math.max(m, node.data);
+
+		return m;
+	}
+
+	public static int height(Node node) {
+		int h = -1;
+
+		for (Node child : node.children) {
+			int ch = height(child);
+			h = Math.max(h, ch);
+		}
+		h += 1;
+
+		return h;
+	}
+
+	public static void traversals(Node node) {
+		System.out.println("Node Pre " + node.data);
+
+		for (Node child : node.children) {
+			System.out.println("Edge Pre " + node.data + "--" + child.data);
+			traversals(child);
+			System.out.println("Edge Post " + node.data + "--" + child.data);
+		}
+
+		System.out.println("Node Post " + node.data);
+	}
+
+	public static void levelOrder(Node node) {
+		// RPA--remove print add
+		Queue<Node>q=new ArrayDeque<>();
+		q.add(node);
 		
-		for(Node child:node.children) {
-			ArrayList<Integer>pathTillChild=nodeToRootPath(child, data);
-			if(pathTillChild.size()>0) {
-				pathTillChild.add(node.data);
-				return pathTillChild;
+		while (q.size()>0) {
+			node=q.remove();
+			System.out.print(node.data+" ");
+			
+			for (Node child : node.children) {
+				q.add(child);				
 			}
 		}
-		
-		return new ArrayList<>();
+		System.out.println(".");
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -75,12 +122,8 @@ public class NodeToRootPathGenericTree {
 			arr[i] = Integer.parseInt(values[i]);
 		}
 
-		int data = Integer.parseInt(br.readLine());
-
 		Node root = construct(arr);
-		ArrayList<Integer> path = nodeToRootPath(root, data);
-		System.out.println(path);
-		// display(root);
+		levelOrder(root);
 	}
 
 }

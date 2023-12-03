@@ -3,7 +3,7 @@ package com.pepcoding.dsa.tree.generictree.level1;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class GenericTree {
+public class ConstructGenericTree1 {
 
 	public static class Node {
 		int data;

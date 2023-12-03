@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class MaxGenericTree {
+public class KLargestGenericTree20 {
 	private static class Node {
 	    int data;
 	    ArrayList<Node> children = new ArrayList<>();
@@ -48,27 +48,36 @@ public class MaxGenericTree {
 	    return root;
 	  }
 
-	  public static int size(Node node) {
-	    int s = 0;
+	  
+	  static int ceil;
+	  static int floor;
+	  public static void ceilAndFloor(Node node, int data) {
+	    if(node.data > data){
+	      if(node.data < ceil){
+	        ceil = node.data;
+	      }
+	    }
+
+	    if(node.data < data){
+	      if(node.data > floor){
+	        floor = node.data;
+	      }
+	    }
 
 	    for (Node child : node.children) {
-	      s += size(child);
+	      ceilAndFloor(child, data);
 	    }
-	    s += 1;
-
-	    return s;
 	  }
 
-	  public static int max(Node node) {
-	    int max=Integer.MIN_VALUE;
-	    
-	    for (Node child : node.children) {
-			int cm=max(child);
-			max=Math.max(cm, max);
+	  public static int kthLargest(Node node, int k){
+	   floor=Integer.MIN_VALUE;
+	   int factor=Integer.MAX_VALUE;
+	   for (int i=0;i<k;i++) {
+		   ceilAndFloor(node, factor);//will set floor
+		   factor=floor;
+		   floor=Integer.MIN_VALUE;
 		}
-	    max=Math.max(node.data, max);
-	    
-	    return max;
+	   return factor;
 	  }
 
 	  public static void main(String[] args) throws Exception {
@@ -80,10 +89,11 @@ public class MaxGenericTree {
 	      arr[i] = Integer.parseInt(values[i]);
 	    }
 
+	    int k = Integer.parseInt(br.readLine());
+
 	    Node root = construct(arr);
-	    int m = max(root);
-	    System.out.println(m);
-	    // display(root);
+	    int kthLargest = kthLargest(root, k);
+	    System.out.println(kthLargest);
 	  }
 
 }

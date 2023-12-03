@@ -2,12 +2,10 @@ package com.pepcoding.dsa.tree.generictree.level1;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Queue;
 import java.util.Stack;
 
-public class LevelOrderGenericTree {
+public class SizeGenerictree2 {
 	private static class Node {
 		int data;
 		ArrayList<Node> children = new ArrayList<>();
@@ -51,66 +49,14 @@ public class LevelOrderGenericTree {
 	}
 
 	public static int size(Node node) {
-		int s = 0;
-
+		int s=0;
 		for (Node child : node.children) {
-			s += size(child);
+			int cs=size(child);
+			s=s+cs;
 		}
-		s += 1;
-
-		return s;
-	}
-
-	public static int max(Node node) {
-		int m = Integer.MIN_VALUE;
-
-		for (Node child : node.children) {
-			int cm = max(child);
-			m = Math.max(m, cm);
-		}
-		m = Math.max(m, node.data);
-
-		return m;
-	}
-
-	public static int height(Node node) {
-		int h = -1;
-
-		for (Node child : node.children) {
-			int ch = height(child);
-			h = Math.max(h, ch);
-		}
-		h += 1;
-
-		return h;
-	}
-
-	public static void traversals(Node node) {
-		System.out.println("Node Pre " + node.data);
-
-		for (Node child : node.children) {
-			System.out.println("Edge Pre " + node.data + "--" + child.data);
-			traversals(child);
-			System.out.println("Edge Post " + node.data + "--" + child.data);
-		}
-
-		System.out.println("Node Post " + node.data);
-	}
-
-	public static void levelOrder(Node node) {
-		// RPA--remove print add
-		Queue<Node>q=new ArrayDeque<>();
-		q.add(node);
+		s=s+1;
 		
-		while (q.size()>0) {
-			node=q.remove();
-			System.out.print(node.data+" ");
-			
-			for (Node child : node.children) {
-				q.add(child);				
-			}
-		}
-		System.out.println(".");
+		return s;
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -123,7 +69,9 @@ public class LevelOrderGenericTree {
 		}
 
 		Node root = construct(arr);
-		levelOrder(root);
+		int sz = size(root);
+		System.out.println(sz);
+		// display(root);
 	}
 
 }

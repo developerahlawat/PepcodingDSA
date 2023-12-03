@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class HeightGenericTree {
+public class IterativePreorderPostorderGenericTree23 {
 	private static class Node {
 	    int data;
 	    ArrayList<Node> children = new ArrayList<>();
@@ -48,38 +48,38 @@ public class HeightGenericTree {
 	    return root;
 	  }
 
-	  public static int size(Node node) {
-	    int s = 0;
-
-	    for (Node child : node.children) {
-	      s += size(child);
-	    }
-	    s += 1;
-
-	    return s;
+	  static class Pair{
+		  Node node;
+		  int state;
+		  
+		  Pair(Node node,int state){
+			  this.node=node;
+			  this.state=state;
+		  }
 	  }
-
-	  public static int max(Node node) {
-	    int m = Integer.MIN_VALUE;
-
-	    for (Node child : node.children) {
-	      int cm = max(child);
-	      m = Math.max(m, cm);
-	    }
-	    m = Math.max(m, node.data);
-
-	    return m;
-	  }
-
-	  public static int height(Node node) {
-	    int ht=-1;// -1 for height using edge.0  for height using node
-	    for (Node child : node.children) {
-			int ch=height(child);
-			ht=Math.max(ch, ht);
-		}
-	    ht+=1;
-	    
-	    return ht;
+	  public static void IterativePreandPostOrder(Node node) {
+	   Stack<Pair> st=new Stack<>();
+	   st.push(new Pair(node,-1));
+	   
+	   String pre="";
+	   String post="";
+	   
+	   while(st.size()>0) {
+		   Pair top=st.peek();
+		   if(top.state==-1) {
+			   pre+=top.node.data+" ";
+			   top.state++;
+		   }else if(top.state==top.node.children.size()) {
+			   post+=top.node.data+" ";
+			   st.pop();
+		   }else {
+			   Pair child=new Pair(top.node.children.get(top.state),-1);
+			   st.push(child);
+			   top.state++;
+		   }
+	   }
+	   System.out.println(pre);
+	   System.out.println(post);
 	  }
 
 	  public static void main(String[] args) throws Exception {
@@ -92,9 +92,6 @@ public class HeightGenericTree {
 	    }
 
 	    Node root = construct(arr);
-	    int h = height(root);
-	    System.out.println(h);
-	    // display(root);
+	    IterativePreandPostOrder(root);
 	  }
-
 }

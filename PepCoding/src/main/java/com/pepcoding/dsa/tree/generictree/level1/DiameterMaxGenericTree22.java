@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class CeilFloorGenericTree {
+public class DiameterMaxGenericTree22 {
 	private static class Node {
 	    int data;
 	    ArrayList<Node> children = new ArrayList<>();
@@ -47,22 +47,33 @@ public class CeilFloorGenericTree {
 
 	    return root;
 	  }
+	  
+	  static int dia=0;
+	  static int calculateDiaReturnHeight(Node node) {
+		  int deepestChildHeight=-1;
+		  int secondDeepestChildHeight=-1;
+		  
+		  for (Node child : node.children) {
+			  int childHeight=calculateDiaReturnHeight(child);
+			  
+			  if(childHeight>deepestChildHeight) {
+				  secondDeepestChildHeight=deepestChildHeight;
+				  deepestChildHeight=childHeight;
+			  }else if(childHeight>secondDeepestChildHeight) {
+				  secondDeepestChildHeight=childHeight;
+			  }			
+		}
+		  int cand=deepestChildHeight+secondDeepestChildHeight+2;
+		  
+		  if(cand>dia)
+			  dia=cand;
+		  
+		  deepestChildHeight+=1;
+		  
+		  return deepestChildHeight;
+	  }
 
 	  
-	  static int ceil;
-	  static int floor;
-	  public static void ceilAndFloor(Node node, int data) {
-	    if(node.data>data) {
-	    	if(node.data<ceil)
-	    		ceil=node.data;
-	    }else if(node.data<data) {
-	    	if(node.data>floor)
-	    		floor=node.data;
-	    }
-		  for (Node child : node.children) {
-			  ceilAndFloor(child, data);
-		}
-	  }
 
 	  public static void main(String[] args) throws Exception {
 	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -73,14 +84,8 @@ public class CeilFloorGenericTree {
 	      arr[i] = Integer.parseInt(values[i]);
 	    }
 
-	    int data = Integer.parseInt(br.readLine());
-
 	    Node root = construct(arr);
-	    ceil = Integer.MAX_VALUE;
-	    floor = Integer.MIN_VALUE;
-	    ceilAndFloor(root, data);
-	    System.out.println("CEIL = " + ceil);
-	    System.out.println("FLOOR = " + floor);
+	    calculateDiaReturnHeight(root);
+	    System.out.println(dia);
 	  }
-
 }

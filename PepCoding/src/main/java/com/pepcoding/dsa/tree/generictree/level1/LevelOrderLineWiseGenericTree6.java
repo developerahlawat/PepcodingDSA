@@ -2,10 +2,12 @@ package com.pepcoding.dsa.tree.generictree.level1;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Queue;
 import java.util.Stack;
 
-public class TraversalGenericTree {
+public class LevelOrderLineWiseGenericTree6 {
 	private static class Node {
 		int data;
 		ArrayList<Node> children = new ArrayList<>();
@@ -84,17 +86,34 @@ public class TraversalGenericTree {
 	}
 
 	public static void traversals(Node node) {
-		// euler's left ,on the way deep in the recursion ,node's pre area
-		System.out.println("Node Pre" + node.data);
+		System.out.println("Node Pre " + node.data);
+
 		for (Node child : node.children) {
-			// edge pre
-			System.out.println("Edge Pre" + node.data + "--" + child.data);
+			System.out.println("Edge Pre " + node.data + "--" + child.data);
 			traversals(child);
-			// edge post
-			System.out.println("Edge Post" + node.data + "--" + child.data);
+			System.out.println("Edge Post " + node.data + "--" + child.data);
 		}
-		// euler's right ,on the way out of recursion ,node's post area
-		System.out.println("Node Post" + node.data);
+
+		System.out.println("Node Post " + node.data);
+	}
+
+	public static void levelOrderLinewise(Node node) {
+		Queue<Node> mainQueue = new ArrayDeque<>();
+		Queue<Node> childQueue = new ArrayDeque<>();
+		mainQueue.add(node);
+
+		while (mainQueue.size() > 0) {
+			node = mainQueue.remove();
+			System.out.print(node.data + " ");
+			for (Node child : node.children)
+				childQueue.add(child);
+
+			if (mainQueue.size() == 0) {
+				mainQueue = childQueue;
+				childQueue = new ArrayDeque<>();
+				System.out.println();
+			}
+		}
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -107,7 +126,7 @@ public class TraversalGenericTree {
 		}
 
 		Node root = construct(arr);
-		traversals(root);
+		levelOrderLinewise(root);
 	}
 
 }

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Stack;
 
-public class LinearizeGenericTree {
+public class RemoveLeavesGenericTree9 {
 	private static class Node {
 	    int data;
 	    ArrayList<Node> children = new ArrayList<>();
@@ -136,38 +136,17 @@ public class LinearizeGenericTree {
 	  }
 
 	  public static void removeLeaves(Node node) {
-	    for (int i = node.children.size() - 1; i >= 0; i--) {
-	      Node child = node.children.get(i);
-	      if (child.children.size() == 0) {
-	        node.children.remove(i);
-	      }
-	    }
-
-	    for(Node child: node.children){
-	      removeLeaves(child);
-	    }
+	    for(int i=node.children.size()-1;i>=0;i--) {//always use reverse while removing from list as it through concurrent error
+	    	Node child=node.children.get(i);
+	    	if(child.children.size()==0)
+	    		node.children.remove(child);
+	    }//logic should be in pre logic
+		  
+		  for(Node child:node.children)
+	    	removeLeaves(child);
 	  }
 
-	  public static void linearize(Node node){
-	    for (Node child : node.children) 
-	    	linearize(child);
-	    
-	    while(node.children.size()>1){
-	    	Node lastChild=node.children.remove(node.children.size()-1);
-	    	Node secLastChild=node.children.get(node.children.size()-1);
-	    	Node secLastTail=getTail(secLastChild);
-	    	secLastTail.children.add(lastChild);
-	    }
-	  }
-
-	  private static Node getTail(Node node) {
-		while(node.children.size()==1)
-			node=node.children.get(0);
-		
-		return node;
-	}
-
-	public static void main(String[] args) throws Exception {
+	  public static void main(String[] args) throws Exception {
 	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	    int n = Integer.parseInt(br.readLine());
 	    int[] arr = new int[n];
@@ -177,7 +156,7 @@ public class LinearizeGenericTree {
 	    }
 
 	    Node root = construct(arr);
-	    linearize(root);
+	    removeLeaves(root);
 	    display(root);
 	  }
 }

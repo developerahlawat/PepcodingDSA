@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class LevelOrderLineWiseZigZagGenericTree {
+public class LevelOrderLineWiseZigZagGenericTree7 {
 	private static class Node {
 		int data;
 		ArrayList<Node> children = new ArrayList<>();

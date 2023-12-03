@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class IterativePreorderPostorderGenericTree {
+public class MaximumSubtreeSumGenericTree21 {
 	private static class Node {
 	    int data;
 	    ArrayList<Node> children = new ArrayList<>();
@@ -47,39 +47,24 @@ public class IterativePreorderPostorderGenericTree {
 
 	    return root;
 	  }
-
-	  static class Pair{
-		  Node node;
-		  int state;
+	  
+	  static int maxSumNode=0;
+	  static int maxSum=Integer.MIN_VALUE;
+	  static int retSumAndCalculateMSST(Node node) {
+		  int sum=0;
 		  
-		  Pair(Node node,int state){
-			  this.node=node;
-			  this.state=state;
+		  for (Node child : node.children) {
+			int csum=retSumAndCalculateMSST(child);
+			sum+=csum;
+		}
+		  
+		  sum+=node.data;
+		  if(sum>maxSum) {
+			  maxSumNode=node.data;
+			  maxSum=sum;
 		  }
-	  }
-	  public static void IterativePreandPostOrder(Node node) {
-	   Stack<Pair> st=new Stack<>();
-	   st.push(new Pair(node,-1));
-	   
-	   String pre="";
-	   String post="";
-	   
-	   while(st.size()>0) {
-		   Pair top=st.peek();
-		   if(top.state==-1) {
-			   pre+=top.node.data+" ";
-			   top.state++;
-		   }else if(top.state==top.node.children.size()) {
-			   post+=top.node.data+" ";
-			   st.pop();
-		   }else {
-			   Pair child=new Pair(top.node.children.get(top.state),-1);
-			   st.push(child);
-			   top.state++;
-		   }
-	   }
-	   System.out.println(pre);
-	   System.out.println(post);
+		  
+		  return sum;
 	  }
 
 	  public static void main(String[] args) throws Exception {
@@ -92,6 +77,8 @@ public class IterativePreorderPostorderGenericTree {
 	    }
 
 	    Node root = construct(arr);
-	    IterativePreandPostOrder(root);
+	    retSumAndCalculateMSST(root);
+	    System.out.println(maxSumNode+"@"+maxSum);
 	  }
+
 }

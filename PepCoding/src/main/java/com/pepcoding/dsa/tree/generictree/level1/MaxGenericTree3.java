@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Stack;
 
-public class AreMirrorTreeGenericTree {
+public class MaxGenericTree3 {
 	private static class Node {
 	    int data;
 	    ArrayList<Node> children = new ArrayList<>();
@@ -60,67 +60,30 @@ public class AreMirrorTreeGenericTree {
 	  }
 
 	  public static int max(Node node) {
-	    int m = Integer.MIN_VALUE;
-
+	    int max=Integer.MIN_VALUE;
+	    
 	    for (Node child : node.children) {
-	      int cm = max(child);
-	      m = Math.max(m, cm);
-	    }
-	    m = Math.max(m, node.data);
-
-	    return m;
+			int cm=max(child);
+			max=Math.max(cm, max);
+		}
+	    max=Math.max(node.data, max);
+	    
+	    return max;
 	  }
-
-	  public static int height(Node node) {
-	    int h = -1;
-
-	    for (Node child : node.children) {
-	      int ch = height(child);
-	      h = Math.max(h, ch);
-	    }
-	    h += 1;
-
-	    return h;
-	  }
-
-	  public static boolean areMirror(Node n1, Node n2) {
-	   if(n1.children.size()!=n2.children.size()) 
-		   return false;
-	   
-	   for (int i = 0; i < n1.children.size(); i++) {
-		int j=n1.children.size()-1-i;
-		Node c1=n1.children.get(i);
-		Node c2=n2.children.get(j);
-		
-		if(areMirror(c1, c2)==false)
-			return false;
-		
-	   }
-	  	
-		return true;
-}
-	
 
 	  public static void main(String[] args) throws Exception {
 	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-	    int n1 = Integer.parseInt(br.readLine());
-	    int[] arr1 = new int[n1];
-	    String[] values1 = br.readLine().split(" ");
-	    for (int i = 0; i < n1; i++) {
-	      arr1[i] = Integer.parseInt(values1[i]);
+	    int n = Integer.parseInt(br.readLine());
+	    int[] arr = new int[n];
+	    String[] values = br.readLine().split(" ");
+	    for (int i = 0; i < n; i++) {
+	      arr[i] = Integer.parseInt(values[i]);
 	    }
-	    Node root1 = construct(arr1);
 
-	    int n2 = Integer.parseInt(br.readLine());
-	    int[] arr2 = new int[n2];
-	    String[] values2 = br.readLine().split(" ");
-	    for (int i = 0; i < n2; i++) {
-	      arr2[i] = Integer.parseInt(values2[i]);
-	    }
-	    Node root2 = construct(arr2);
-
-	    boolean mirror = areMirror(root1, root2);
-	    System.out.println(mirror);
+	    Node root = construct(arr);
+	    int m = max(root);
+	    System.out.println(m);
+	    // display(root);
 	  }
+
 }
