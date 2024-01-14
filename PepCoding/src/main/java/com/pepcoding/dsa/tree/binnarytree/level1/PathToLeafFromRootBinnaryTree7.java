@@ -1,10 +1,10 @@
-package com.pepcoding.dsa.tree.bst.level1;
+package com.pepcoding.dsa.tree.binnarytree.level1;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Stack;
 
-public class SizeSumMaxMinBST {
+public class PathToLeafFromRootBinnaryTree7 {
 	public static class Node {
 		int data;
 		Node left;
@@ -82,47 +82,19 @@ public class SizeSumMaxMinBST {
 		display(node.right);
 	}
 
-	public static int size(Node node) {
-		if (node == null)
-			return 0;
-		int leftSize = size(node.left);
-		int rightSize = size(node.right);
-		int totalSize = leftSize + rightSize + 1;
-		return totalSize;
-	}
-
-	public static int sum(Node node) {
-		if (node == null)
-			return 0;
-		int leftSum = sum(node.left);
-		int rightSum = sum(node.right);
-		int totalSum = leftSum + rightSum + node.data;
-		return totalSum;
-	}
-
-	public static int max(Node node) {
-		if (node.right != null)
-			return max(node.right);
-		else
-			return node.data;
-	}
-
-	public static int min(Node node) {
-		if (node.left != null)
-			return min(node.left);
-		else
-			return node.data;
-	}
-
-	public static boolean find(Node node, int data) {
-		if (node == null)
-			return false;
-		if (data > node.data)
-			return find(node.right, data);
-		else if (data < node.data)
-			return find(node.left, data);
-		else
-			return true;
+	public static void pathToLeafFromRoot(Node node, String path, int sum, int lo, int hi) {
+		if(node==null)
+			return;
+		
+		if(node.left==null && node.right==null) {
+			sum+=node.data;
+			if(sum>=lo && sum<=hi)
+				System.out.println(path+node.data);
+			
+			return;
+		}
+		pathToLeafFromRoot(node.left, path+node.data+" ", sum+node.data, lo, hi);
+        pathToLeafFromRoot(node.right, path+node.data+" ", sum+node.data, lo, hi);	
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -138,21 +110,10 @@ public class SizeSumMaxMinBST {
 			}
 		}
 
-		int data = Integer.parseInt(br.readLine());
+		int lo = Integer.parseInt(br.readLine());
+		int hi = Integer.parseInt(br.readLine());
 
 		Node root = construct(arr);
-
-		int size = size(root);
-		int sum = sum(root);
-		int max = max(root);
-		int min = min(root);
-		boolean found = find(root, data);
-
-		System.out.println(size);
-		System.out.println(sum);
-		System.out.println(max);
-		System.out.println(min);
-		System.out.println(found);
+		pathToLeafFromRoot(root, "", 0, lo, hi);
 	}
-
 }

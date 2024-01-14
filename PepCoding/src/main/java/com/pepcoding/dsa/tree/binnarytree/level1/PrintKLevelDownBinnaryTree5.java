@@ -2,10 +2,9 @@ package com.pepcoding.dsa.tree.binnarytree.level1;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Stack;
 
-public class FindRootNodePathBinnaryTree {
+public class PrintKLevelDownBinnaryTree5 {
 	public static class Node {
 		int data;
 		Node left;
@@ -82,32 +81,16 @@ public class FindRootNodePathBinnaryTree {
 		display(node.left);
 		display(node.right);
 	}
-	
-	static ArrayList<Integer> path;
 
-	public static boolean find(Node node, int data) {
-		if (node == null)
-			return false;
-		
-		if (node.data == data) {
-			path.add(node.data);
-			return true;
-			}
+	public static void printKLevelsDown(Node node, int k) {
+		if (node == null || k < 0)
+			return;
 
-		boolean leftChild = find(node.left, data);
-		if (leftChild) {
-			path.add(node.data);
-			return true;
-			}
+		if (k == 0)
+			System.out.println(node.data);
 
-		boolean rightChild = find(node.right, data);
-		if (rightChild) {
-			path.add(node.data);
-			return true;
-		}
-
-		return false;
-
+		printKLevelsDown(node.left, k - 1);
+		printKLevelsDown(node.right, k - 1);
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -123,13 +106,10 @@ public class FindRootNodePathBinnaryTree {
 			}
 		}
 
-		int data = Integer.parseInt(br.readLine());
+		int k = Integer.parseInt(br.readLine());
 
 		Node root = construct(arr);
-		path=new ArrayList<>();
-		boolean found = find(root, data);
-		System.out.println(found);
-		System.out.println(path);
+		printKLevelsDown(root, k);
 	}
 
 }

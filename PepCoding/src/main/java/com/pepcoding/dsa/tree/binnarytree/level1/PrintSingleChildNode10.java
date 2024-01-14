@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Stack;
 
-public class PrintSingleChildNode {
+public class PrintSingleChildNode10 {
 	public static class Node {
 		int data;
 		Node left;

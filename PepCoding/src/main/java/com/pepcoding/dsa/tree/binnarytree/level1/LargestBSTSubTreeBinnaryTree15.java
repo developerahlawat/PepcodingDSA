@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Stack;
 
-public class LargestBSTSubTreeBinnaryTree {
+public class LargestBSTSubTreeBinnaryTree15 {
 	 public static class Node {
 		    int data;
 		    Node left;

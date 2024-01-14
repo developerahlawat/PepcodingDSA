@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Stack;
 
-public class PrintInRange {
+public class RemoveNodeBST4 {
 	public static class Node {
 	    int data;
 	    Node left;
@@ -81,19 +81,36 @@ public class PrintInRange {
 	    display(node.left);
 	    display(node.right);
 	  }
+	  
+	  public static int max(Node node) {
+			if (node.right != null)
+				return max(node.right);
+			else
+				return node.data;
+		}
 
-	  public static void pir(Node node, int d1, int d2) {
-	   if(node==null)
-		   return;
-		  if(d1<node.data && d2<node.data)
-		   pir(node.left, d1, d2);
-	   else if(d1>node.data && d2>node.data)
-		   pir(node.right, d1, d2);
-	   else {
-		   pir(node.left, d1, d2);
-		   System.out.println(node.data);
-		   pir(node.right, d1, d2);
-	   }
+	  public static Node remove(Node node, int data) {
+	    if(node==null)
+	    	return null;
+	    
+	    if(data>node.data)
+	    	node.right=remove(node.right, data);
+	    else if(data<node.data)
+	    	node.left=remove(node.left, data);
+	    else {
+	    	if(node.left!=null && node.right!=null) {
+	    	int lmax=max(node.left);
+	    	node.data=lmax;
+	    	node.left=remove(node.left, lmax);
+	    	return node;
+	    	}else if(node.right!=null)
+	    		return node.right;
+	    	else if(node.left!=null)
+	    		return node.left;
+	    	else
+	    		return null;
+	    }
+	    return node;
 	  }
 
 	  public static void main(String[] args) throws Exception {
@@ -109,11 +126,12 @@ public class PrintInRange {
 	      }
 	    }
 
-	    int d1 = Integer.parseInt(br.readLine());
-	    int d2 = Integer.parseInt(br.readLine());
+	    int data = Integer.parseInt(br.readLine());
 
 	    Node root = construct(arr);
-	    pir(root, d1, d2);
+	    root = remove(root, data);
+
+	    display(root);
 	  }
 
 }

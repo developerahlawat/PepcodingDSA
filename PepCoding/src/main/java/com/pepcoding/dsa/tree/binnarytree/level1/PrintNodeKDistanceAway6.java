@@ -2,9 +2,11 @@ package com.pepcoding.dsa.tree.binnarytree.level1;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Stack;
 
-public class IsBSTBinnaryTree {
+
+public class PrintNodeKDistanceAway6 {
 	public static class Node {
 		int data;
 		Node left;
@@ -82,42 +84,50 @@ public class IsBSTBinnaryTree {
 		display(node.right);
 	}
 
-	public static int height(Node node) {
-		if (node == null) {
-			return -1;
-		}
+	public static void printKLevelsDown(Node node, int k, Node blocker) {
+		if (node == null || k < 0 || node == blocker)
+			return;
 
-		int lh = height(node.left);
-		int rh = height(node.right);
+		if (k == 0)
+			System.out.println(node.data);
 
-		int th = Math.max(lh, rh) + 1;
-		return th;
+		printKLevelsDown(node.left, k - 1, blocker);
+		printKLevelsDown(node.right, k - 1, blocker);
 	}
 
-	public static class BSTPair {
-		boolean isBST;
-		int min;
-		int max;
-	}
+	static ArrayList<Node> path;
 
-	public static BSTPair isBST(Node node) {
-		if (node == null) {
-			BSTPair bp = new BSTPair();
-			bp.max = Integer.MIN_VALUE;
-			bp.min = Integer.MAX_VALUE;
-			bp.isBST = true;
-			return bp;
+	public static boolean find(Node node, int data) {
+		if (node == null)
+			return false;
+
+		if (node.data == data) {
+			path.add(node);
+			return true;
 		}
 
-		BSTPair leftPair = isBST(node.left);
-		BSTPair rightPair = isBST(node.right);
+		boolean leftChild = find(node.left, data);
+		if (leftChild) {
+			path.add(node);
+			return true;
+		}
 
-		BSTPair mPair = new BSTPair();
-		mPair.isBST = leftPair.isBST && rightPair.isBST && (node.data >= leftPair.max && node.data <= rightPair.min);
-		mPair.min = Math.min(node.data, Math.min(leftPair.min, rightPair.min));
-		mPair.max = Math.max(node.data, Math.max(leftPair.max, rightPair.max));
-		
-		return mPair;
+		boolean rightChild = find(node.right, data);
+		if (rightChild) {
+			path.add(node);
+			return true;
+		}
+
+		return false;
+
+	}
+
+	public static void printKNodesFar(Node node, int data, int k) {
+		path = new ArrayList<>();
+		find(node, data);
+		for (int i = 0; i < path.size(); i++) {
+			printKLevelsDown(path.get(i), k - i, i == 0 ? null : path.get(i - 1));
+		}
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -133,10 +143,11 @@ public class IsBSTBinnaryTree {
 			}
 		}
 
-		Node root = construct(arr);
+		int data = Integer.parseInt(br.readLine());
+		int k = Integer.parseInt(br.readLine());
 
-		BSTPair bp = isBST(root);
-		System.out.println(bp.isBST);
+		Node root = construct(arr);
+		printKNodesFar(root, data, k);
 	}
 
 }

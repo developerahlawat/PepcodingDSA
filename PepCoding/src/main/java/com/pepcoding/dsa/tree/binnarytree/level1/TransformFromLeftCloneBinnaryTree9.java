@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Stack;
 
-public class SizeSumMaxHeightBinnaryTree {
+public class TransformFromLeftCloneBinnaryTree9 {
 	public static class Node {
 		int data;
 		Node left;
@@ -82,40 +82,17 @@ public class SizeSumMaxHeightBinnaryTree {
 		display(node.right);
 	}
 
-	public static int size(Node node) {
-		if(node==null)
-			return 0;
-		int leftSize = size(node.left);
-		int rightSize = size(node.right);
-		int totalSize = leftSize + rightSize+1;
-		return totalSize;
-	}
+	public static Node transBackFromLeftClonedTree(Node node) {
+		if (node == null)
+			return null;
 
-	public static int sum(Node node) {
-		if(node==null)
-			return 0;
-		int leftSum = sum(node.left);
-		int rightSum = sum(node.right);
-		int totalSum = leftSum + rightSum+node.data;
-		return totalSum;
-	}
+		Node leftNewNode = transBackFromLeftClonedTree(node.left.left);
+		Node rightNewNode = transBackFromLeftClonedTree(node.right);
 
-	public static int max(Node node) {
-		if(node==null)
-			return Integer.MIN_VALUE;
-		int leftMax = max(node.left);
-		int rightMax = max(node.right);
-		int totalMax=Math.max(node.data,Math.max(leftMax, rightMax));
-		return totalMax;
-	}
+		node.left = leftNewNode;
+		node.right = rightNewNode;
 
-	public static int height(Node node) {
-		if(node==null)
-			return -1;//-1 for node,0 for edges
-		int leftHeight = height(node.left);
-		int rightHeight= height(node.right);
-		int totalHeight =Math.max(leftHeight, rightHeight)+1;
-		return totalHeight;
+		return node;
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -132,15 +109,8 @@ public class SizeSumMaxHeightBinnaryTree {
 		}
 
 		Node root = construct(arr);
-
-		int size = size(root);
-		int sum = sum(root);
-		int max = max(root);
-		int ht = height(root);
-		System.out.println(size);
-		System.out.println(sum);
-		System.out.println(max);
-		System.out.println(ht);
+		root = transBackFromLeftClonedTree(root);
+		display(root);
 	}
 
 }

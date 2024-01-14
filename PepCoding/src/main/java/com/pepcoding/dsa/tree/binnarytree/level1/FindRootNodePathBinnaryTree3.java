@@ -2,9 +2,10 @@ package com.pepcoding.dsa.tree.binnarytree.level1;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Stack;
 
-public class RemoveLeavesBinnaryTree {
+public class FindRootNodePathBinnaryTree3 {
 	public static class Node {
 		int data;
 		Node left;
@@ -81,17 +82,32 @@ public class RemoveLeavesBinnaryTree {
 		display(node.left);
 		display(node.right);
 	}
+	
+	static ArrayList<Integer> path;
 
-	public static Node removeLeaves(Node node) {
+	public static boolean find(Node node, int data) {
 		if (node == null)
-			return null;
+			return false;
+		
+		if (node.data == data) {
+			path.add(node.data);
+			return true;
+			}
 
-		if (node.left == null && node.right == null)
-			return null;
+		boolean leftChild = find(node.left, data);
+		if (leftChild) {
+			path.add(node.data);
+			return true;
+			}
 
-		node.left = removeLeaves(node.left);
-		node.right = removeLeaves(node.right);
-		return node;
+		boolean rightChild = find(node.right, data);
+		if (rightChild) {
+			path.add(node.data);
+			return true;
+		}
+
+		return false;
+
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -107,9 +123,13 @@ public class RemoveLeavesBinnaryTree {
 			}
 		}
 
+		int data = Integer.parseInt(br.readLine());
+
 		Node root = construct(arr);
-		root = removeLeaves(root);
-		display(root);
+		path=new ArrayList<>();
+		boolean found = find(root, data);
+		System.out.println(found);
+		System.out.println(path);
 	}
 
 }

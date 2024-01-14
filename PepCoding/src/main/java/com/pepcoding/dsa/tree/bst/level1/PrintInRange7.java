@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Stack;
 
-public class LcaBST {
+public class PrintInRange7 {
 	public static class Node {
 	    int data;
 	    Node left;
@@ -82,13 +82,18 @@ public class LcaBST {
 	    display(node.right);
 	  }
 
-	  public static int lca(Node node, int d1, int d2) {
-	   if(d1<node.data && d2<node.data)
-		   return lca(node.left, d1, d2);
+	  public static void pir(Node node, int d1, int d2) {
+	   if(node==null)
+		   return;
+		  if(d1<node.data && d2<node.data)
+		   pir(node.left, d1, d2);
 	   else if(d1>node.data && d2>node.data)
-		   return lca(node.right, d1, d2);
-	   else
-		   return node.data;
+		   pir(node.right, d1, d2);
+	   else {
+		   pir(node.left, d1, d2);
+		   System.out.println(node.data);
+		   pir(node.right, d1, d2);
+	   }
 	  }
 
 	  public static void main(String[] args) throws Exception {
@@ -108,8 +113,7 @@ public class LcaBST {
 	    int d2 = Integer.parseInt(br.readLine());
 
 	    Node root = construct(arr);
-	    int lca = lca(root, d1, d2);
-	    System.out.println(lca);
+	    pir(root, d1, d2);
 	  }
 
 }

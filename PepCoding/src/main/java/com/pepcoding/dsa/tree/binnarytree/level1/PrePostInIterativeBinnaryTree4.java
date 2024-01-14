@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Stack;
 
-public class PrintKLevelDownBinnaryTree {
+public class PrePostInIterativeBinnaryTree4 {
 	public static class Node {
 		int data;
 		Node left;
@@ -82,15 +82,39 @@ public class PrintKLevelDownBinnaryTree {
 		display(node.right);
 	}
 
-	public static void printKLevelsDown(Node node, int k) {
-		if (node == null || k < 0)
-			return;
+	public static void iterativePrePostInTraversal(Node node) {
+		Stack<Pair> st = new Stack<>();
+		Pair root = new Pair(node, 1);
+		st.push(root);
 
-		if (k == 0)
-			System.out.println(node.data);
+		String pre = "";
+		String in = "";
+		String post = "";
 
-		printKLevelsDown(node.left, k - 1);
-		printKLevelsDown(node.right, k - 1);
+		while (st.size() > 0) {
+			Pair top = st.peek();
+			if (top.state == 1) {// pre,state++,left
+				pre += top.node.data + " ";
+				top.state++;
+				if (top.node.left != null) {
+					Pair left = new Pair(top.node.left, 1);
+					st.push(left);
+				}
+			} else if (top.state == 2) {// in,s++,right
+				in += top.node.data + " ";
+				top.state++;
+				if (top.node.right != null) {
+					Pair right = new Pair(top.node.right, 1);
+					st.push(right);
+				}
+			} else {// post,pop
+				post += top.node.data + " ";
+				st.pop();
+			}
+		}
+		System.out.println(pre);
+		System.out.println(in);
+		System.out.println(post);
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -106,10 +130,8 @@ public class PrintKLevelDownBinnaryTree {
 			}
 		}
 
-		int k = Integer.parseInt(br.readLine());
-
 		Node root = construct(arr);
-		printKLevelsDown(root, k);
+		iterativePrePostInTraversal(root);
 	}
 
 }

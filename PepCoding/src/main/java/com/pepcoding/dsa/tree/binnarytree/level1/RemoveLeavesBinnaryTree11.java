@@ -2,12 +2,9 @@ package com.pepcoding.dsa.tree.binnarytree.level1;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Stack;
 
-import com.pepcoding.dsa.tree.binnarytree.level1.PrintKLevelDownBinnaryTree.Node;
-
-public class PrintNodeKDistanceAway {
+public class RemoveLeavesBinnaryTree11 {
 	public static class Node {
 		int data;
 		Node left;
@@ -85,50 +82,16 @@ public class PrintNodeKDistanceAway {
 		display(node.right);
 	}
 
-	public static void printKLevelsDown(Node node, int k, Node blocker) {
-		if (node == null || k < 0 || node == blocker)
-			return;
-
-		if (k == 0)
-			System.out.println(node.data);
-
-		printKLevelsDown(node.left, k - 1, blocker);
-		printKLevelsDown(node.right, k - 1, blocker);
-	}
-
-	static ArrayList<Node> path;
-
-	public static boolean find(Node node, int data) {
+	public static Node removeLeaves(Node node) {
 		if (node == null)
-			return false;
+			return null;
 
-		if (node.data == data) {
-			path.add(node);
-			return true;
-		}
+		if (node.left == null && node.right == null)
+			return null;
 
-		boolean leftChild = find(node.left, data);
-		if (leftChild) {
-			path.add(node);
-			return true;
-		}
-
-		boolean rightChild = find(node.right, data);
-		if (rightChild) {
-			path.add(node);
-			return true;
-		}
-
-		return false;
-
-	}
-
-	public static void printKNodesFar(Node node, int data, int k) {
-		path = new ArrayList<>();
-		find(node, data);
-		for (int i = 0; i < path.size(); i++) {
-			printKLevelsDown(path.get(i), k - i, i == 0 ? null : path.get(i - 1));
-		}
+		node.left = removeLeaves(node.left);
+		node.right = removeLeaves(node.right);
+		return node;
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -144,11 +107,9 @@ public class PrintNodeKDistanceAway {
 			}
 		}
 
-		int data = Integer.parseInt(br.readLine());
-		int k = Integer.parseInt(br.readLine());
-
 		Node root = construct(arr);
-		printKNodesFar(root, data, k);
+		root = removeLeaves(root);
+		display(root);
 	}
 
 }

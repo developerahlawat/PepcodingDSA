@@ -2,7 +2,7 @@ package com.pepcoding.dsa.tree.bst.level1;
 
 import java.util.Stack;
 
-public class ConstructBinnarySearchTree {
+public class ConstructBinnarySearchTree1 {
 	public static class Node {
 		int data;
 		Node left;

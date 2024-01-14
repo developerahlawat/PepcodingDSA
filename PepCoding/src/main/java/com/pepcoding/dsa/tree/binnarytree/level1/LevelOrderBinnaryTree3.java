@@ -2,9 +2,11 @@ package com.pepcoding.dsa.tree.binnarytree.level1;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayDeque;
+import java.util.Queue;
 import java.util.Stack;
 
-public class TiltBinnaryTree {
+public class LevelOrderBinnaryTree3 {
 	public static class Node {
 	    int data;
 	    Node left;
@@ -82,29 +84,24 @@ public class TiltBinnaryTree {
 	    display(node.right);
 	  }
 
-	  public static int height(Node node) {
-	    if (node == null) {
-	      return -1;
+	  public static void levelOrder(Node node) {
+	    Queue<Node> queue=new ArrayDeque<>();
+	    queue.add(node);
+	    
+	    while(queue.size()>0) {
+	    	int count=queue.size();
+	    	for (int i = 0; i < count; i++) {
+				node=queue.remove();
+				System.out.print(node.data+" ");
+				
+				if(node.left!=null)
+					queue.add(node.left);
+				
+				if(node.right!=null)
+					queue.add(node.right);
+			}
+	    System.out.println();
 	    }
-
-	    int lh = height(node.left);
-	    int rh = height(node.right);
-
-	    int th = Math.max(lh, rh) + 1;
-	    return th;
-	  }
-
-	  static int tilt = 0;
-	  public static int tilt(Node node){
-		  if(node==null)
-			  return 0;
-	  
-		  int leftSum=tilt(node.left);
-		  int rightSum=tilt(node.right);
-		  
-		  tilt+=Math.abs(leftSum-rightSum);
-		  
-		  return leftSum+rightSum+node.data;
 	  }
 
 	  public static void main(String[] args) throws Exception {
@@ -121,9 +118,7 @@ public class TiltBinnaryTree {
 	    }
 
 	    Node root = construct(arr);
-
-	    tilt(root);
-	    System.out.println(tilt);
+	    levelOrder(root);
 	  }
 
 }

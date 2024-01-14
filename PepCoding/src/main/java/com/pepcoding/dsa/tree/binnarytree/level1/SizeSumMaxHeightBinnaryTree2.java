@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Stack;
 
-public class PathTolLeafFromRootBinnaryTree {
+public class SizeSumMaxHeightBinnaryTree2 {
 	public static class Node {
 		int data;
 		Node left;
@@ -82,19 +82,40 @@ public class PathTolLeafFromRootBinnaryTree {
 		display(node.right);
 	}
 
-	public static void pathToLeafFromRoot(Node node, String path, int sum, int lo, int hi) {
+	public static int size(Node node) {
 		if(node==null)
-			return;
-		
-		if(node.left==null && node.right==null) {
-			sum+=node.data;
-			if(sum>=lo && sum<=hi)
-				System.out.println(path+node.data);
-			
-			return;
-		}
-		pathToLeafFromRoot(node.left, path+node.data+" ", sum+node.data, lo, hi);
-        pathToLeafFromRoot(node.right, path+node.data+" ", sum+node.data, lo, hi);	
+			return 0;
+		int leftSize = size(node.left);
+		int rightSize = size(node.right);
+		int totalSize = leftSize + rightSize+1;
+		return totalSize;
+	}
+
+	public static int sum(Node node) {
+		if(node==null)
+			return 0;
+		int leftSum = sum(node.left);
+		int rightSum = sum(node.right);
+		int totalSum = leftSum + rightSum+node.data;
+		return totalSum;
+	}
+
+	public static int max(Node node) {
+		if(node==null)
+			return Integer.MIN_VALUE;
+		int leftMax = max(node.left);
+		int rightMax = max(node.right);
+		int totalMax=Math.max(node.data,Math.max(leftMax, rightMax));
+		return totalMax;
+	}
+
+	public static int height(Node node) {
+		if(node==null)
+			return -1;//-1 for node,0 for edges
+		int leftHeight = height(node.left);
+		int rightHeight= height(node.right);
+		int totalHeight =Math.max(leftHeight, rightHeight)+1;
+		return totalHeight;
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -110,10 +131,16 @@ public class PathTolLeafFromRootBinnaryTree {
 			}
 		}
 
-		int lo = Integer.parseInt(br.readLine());
-		int hi = Integer.parseInt(br.readLine());
-
 		Node root = construct(arr);
-		pathToLeafFromRoot(root, "", 0, lo, hi);
+
+		int size = size(root);
+		int sum = sum(root);
+		int max = max(root);
+		int ht = height(root);
+		System.out.println(size);
+		System.out.println(sum);
+		System.out.println(max);
+		System.out.println(ht);
 	}
+
 }

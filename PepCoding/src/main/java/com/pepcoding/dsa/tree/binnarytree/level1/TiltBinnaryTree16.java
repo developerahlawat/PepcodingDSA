@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Stack;
 
-public class IsBalanceBinnaryTree {
+public class TiltBinnaryTree16 {
 	public static class Node {
 	    int data;
 	    Node left;
@@ -81,23 +81,32 @@ public class IsBalanceBinnaryTree {
 	    display(node.left);
 	    display(node.right);
 	  }
-	  
-	  static boolean isBal=true;
-	  public static int isBalance(Node node) {
+
+	  public static int height(Node node) {
+	    if (node == null) {
+	      return -1;
+	    }
+
+	    int lh = height(node.left);
+	    int rh = height(node.right);
+
+	    int th = Math.max(lh, rh) + 1;
+	    return th;
+	  }
+
+	  static int tilt = 0;
+	  public static int tilt(Node node){
 		  if(node==null)
 			  return 0;
-		  
-		  int leftHeight=isBalance(node.left);
-		  int rightHeight=isBalance(node.right);
-		  
-		  int gap=Math.abs(leftHeight-rightHeight);
-		  if(gap>1)
-			  isBal=false;
-		  int Height=Math.max(leftHeight, rightHeight)+1;
-		  
-		  return Height;
-	  }
 	  
+		  int leftSum=tilt(node.left);
+		  int rightSum=tilt(node.right);
+		  
+		  tilt+=Math.abs(leftSum-rightSum);
+		  
+		  return leftSum+rightSum+node.data;
+	  }
+
 	  public static void main(String[] args) throws Exception {
 	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	    int n = Integer.parseInt(br.readLine());
@@ -112,9 +121,9 @@ public class IsBalanceBinnaryTree {
 	    }
 
 	    Node root = construct(arr);
-	    
-	    isBalance(root);
-	    System.out.println(isBal);
+
+	    tilt(root);
+	    System.out.println(tilt);
 	  }
 
 }

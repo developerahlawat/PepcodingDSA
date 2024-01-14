@@ -1,10 +1,10 @@
-package com.pepcoding.dsa.tree.binnarytree.level1;
+package com.pepcoding.dsa.tree.bst.level1;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Stack;
 
-public class TransformFromLeftCloneBinnaryTree {
+public class SizeSumMaxMinBST2 {
 	public static class Node {
 		int data;
 		Node left;
@@ -82,17 +82,47 @@ public class TransformFromLeftCloneBinnaryTree {
 		display(node.right);
 	}
 
-	public static Node transBackFromLeftClonedTree(Node node) {
+	public static int size(Node node) {
 		if (node == null)
-			return null;
+			return 0;
+		int leftSize = size(node.left);
+		int rightSize = size(node.right);
+		int totalSize = leftSize + rightSize + 1;
+		return totalSize;
+	}
 
-		Node leftNewNode = transBackFromLeftClonedTree(node.left.left);
-		Node rightNewNode = transBackFromLeftClonedTree(node.right);
+	public static int sum(Node node) {
+		if (node == null)
+			return 0;
+		int leftSum = sum(node.left);
+		int rightSum = sum(node.right);
+		int totalSum = leftSum + rightSum + node.data;
+		return totalSum;
+	}
 
-		node.left = leftNewNode;
-		node.right = rightNewNode;
+	public static int max(Node node) {
+		if (node.right != null)
+			return max(node.right);
+		else
+			return node.data;
+	}
 
-		return node;
+	public static int min(Node node) {
+		if (node.left != null)
+			return min(node.left);
+		else
+			return node.data;
+	}
+
+	public static boolean find(Node node, int data) {
+		if (node == null)
+			return false;
+		if (data > node.data)
+			return find(node.right, data);
+		else if (data < node.data)
+			return find(node.left, data);
+		else
+			return true;
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -108,9 +138,21 @@ public class TransformFromLeftCloneBinnaryTree {
 			}
 		}
 
+		int data = Integer.parseInt(br.readLine());
+
 		Node root = construct(arr);
-		root = transBackFromLeftClonedTree(root);
-		display(root);
+
+		int size = size(root);
+		int sum = sum(root);
+		int max = max(root);
+		int min = min(root);
+		boolean found = find(root, data);
+
+		System.out.println(size);
+		System.out.println(sum);
+		System.out.println(max);
+		System.out.println(min);
+		System.out.println(found);
 	}
 
 }
