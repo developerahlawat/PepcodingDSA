@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.PriorityQueue;
 
-public class MedianPriorityQueueee {
+public class MedianPriorityQueueee5 {
 	public static class MedianPriorityQueue {
 		PriorityQueue<Integer> left;
 		PriorityQueue<Integer> right;

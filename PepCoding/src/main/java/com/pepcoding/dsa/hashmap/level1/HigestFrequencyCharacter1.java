@@ -3,7 +3,7 @@ package com.pepcoding.dsa.hashmap.level1;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class HigestFrequencyCharacter {
+public class HigestFrequencyCharacter1 {
   public static void main(String[] args) {
 	  try (Scanner scn = new Scanner(System.in)) {
 		String str=scn.nextLine();

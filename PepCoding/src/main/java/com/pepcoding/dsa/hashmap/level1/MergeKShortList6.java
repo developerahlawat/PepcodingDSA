@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
-public class MergeKShortList {
+public class MergeKShortList6 {
 	public static class Pair implements Comparable<Pair>{
 		int listIndex;
 		int dataIndex;

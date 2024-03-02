@@ -2,7 +2,7 @@ package com.pepcoding.dsa.arraysstring.level2;
 
 import java.util.Scanner;
 
-public class RangeAdditionArray {
+public class RangeAdditionArray2 {
     // ~~~~~~~~~~~~~~~~~~~~~User Section~~~~~~~~~~~~~~~~~~~~~
 
     // lintcode 903. https://www.lintcode.com/problem/903/

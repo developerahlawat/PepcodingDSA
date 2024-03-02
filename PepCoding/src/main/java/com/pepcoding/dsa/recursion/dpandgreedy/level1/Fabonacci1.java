@@ -2,7 +2,7 @@ package com.pepcoding.dsa.recursion.dpandgreedy.level1;
 
 import java.util.Scanner;
 
-public class Fabonacci {
+public class Fabonacci1 {
 	
 	public static void main(String[] args) throws Exception {
 		Scanner scn = new Scanner(System.in);

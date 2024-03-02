@@ -3,7 +3,7 @@ package com.pepcoding.dsa.stackandqueue.level1;
 import java.util.Scanner;
 import java.util.Stack;
 
-public class BalancedBrackets {
+public class BalancedBrackets2 {
 
 	public static void main(String[] args) throws Exception {
 		Scanner scn = new Scanner(System.in);

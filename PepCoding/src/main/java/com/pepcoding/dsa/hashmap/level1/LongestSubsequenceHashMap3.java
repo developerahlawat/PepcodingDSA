@@ -3,7 +3,7 @@ package com.pepcoding.dsa.hashmap.level1;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class LongestSubsequenceHashMap {
+public class LongestSubsequenceHashMap3 {
 	public static void main(String[] args) throws Exception {
 	    Scanner scn=new Scanner(System.in);
 	    

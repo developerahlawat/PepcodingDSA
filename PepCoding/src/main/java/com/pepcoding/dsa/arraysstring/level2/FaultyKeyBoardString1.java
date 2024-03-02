@@ -2,7 +2,7 @@ package com.pepcoding.dsa.arraysstring.level2;
 
 import java.util.Scanner;
 
-public class FaultyKeyBoardString {
+public class FaultyKeyBoardString1 {
 
 	// ~~~~~~~~~~~~~~~~~~~~~User Section~~~~~~~~~~~~~~~~~~~~~
 
