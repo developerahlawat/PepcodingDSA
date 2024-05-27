@@ -5,7 +5,14 @@ import java.io.InputStreamReader;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 
-public class BreadthFirstTraversalGraph {
+public class BreadthFirstTraversalGraph10 {
+	/*
+	 * Till now all Questions we were doing with recursion was DFS which travel on uler
+	 * 
+	 * BFS is similar to Level Order Traversal, will use to queue to solve this
+	 * Remove-MarkStar-Work-AddStar
+	 * rm*wa*
+	 */
 	static class Edge {
 		int src;
 		int nbr;
@@ -26,6 +33,28 @@ public class BreadthFirstTraversalGraph {
 			this.psf = psf;
 		}
 
+	}
+	
+	private static void bfs(int vtces, ArrayList<Edge>[] graph, int src) {
+		ArrayDeque<Pair> queue = new ArrayDeque<>();
+		queue.add(new Pair(src, src + ""));
+		boolean[] visited = new boolean[vtces];
+
+		while (queue.size() > 0) {
+			Pair rem = queue.removeFirst();
+
+			if (visited[rem.v] == true)
+				continue;
+			visited[rem.v] = true;
+
+			System.out.println(rem.v + "@" + rem.psf);
+
+			for (Edge e : graph[rem.v]) {
+				if (visited[e.nbr] == false)
+					queue.add(new Pair(e.nbr, rem.psf + e.nbr));
+
+			}
+		}
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -48,26 +77,7 @@ public class BreadthFirstTraversalGraph {
 
 		int src = Integer.parseInt(br.readLine());
 
-		ArrayDeque<Pair> queue = new ArrayDeque<>();
-		queue.add(new Pair(src, src + ""));
-		boolean[] visited = new boolean[vtces];
-
-		while (queue.size() > 0) {
-			Pair rem = queue.removeFirst();
-
-			if (visited[rem.v] == true)
-				continue;
-			visited[rem.v] = true;
-
-			System.out.println(rem.v + "@" + rem.psf);
-
-			for (Edge e : graph[rem.v]) {
-				if (visited[e.nbr] == false)
-					queue.add(new Pair(e.nbr, rem.psf + e.nbr));
-
-			}
-
-		}
+		bfs(vtces, graph, src);
 
 	}
 }

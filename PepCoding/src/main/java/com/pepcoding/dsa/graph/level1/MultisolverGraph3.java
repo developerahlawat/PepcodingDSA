@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
-public class MultisolverGraph {
+public class MultisolverGraph3 {
 	static class Edge {
 	      int src;
 	      int nbr;
@@ -31,6 +31,16 @@ public class MultisolverGraph {
 	         return this.wsf - o.wsf;
 	      }
 	   }
+	   
+	   static String spath;//smalles path
+	   static Integer spathwt = Integer.MAX_VALUE;//smallest path weight
+	   static String lpath;//largest
+	   static Integer lpathwt = Integer.MIN_VALUE;
+	   static String cpath;//ceil
+	   static Integer cpathwt = Integer.MAX_VALUE;
+	   static String fpath;//floor
+	   static Integer fpathwt = Integer.MIN_VALUE;//
+	   static PriorityQueue<Pair> pq = new PriorityQueue<>();// k largest weight
 	   
 	   public static void multisolver(ArrayList<Edge>[] graph, int src, int dest, boolean[] visited, int criteria, int k, String psf, int wsf) {
 		  if(src==dest) {
@@ -107,14 +117,6 @@ public class MultisolverGraph {
 
 
 
-	   static String spath;
-	   static Integer spathwt = Integer.MAX_VALUE;
-	   static String lpath;
-	   static Integer lpathwt = Integer.MIN_VALUE;
-	   static String cpath;
-	   static Integer cpathwt = Integer.MAX_VALUE;
-	   static String fpath;
-	   static Integer fpathwt = Integer.MIN_VALUE;
-	   static PriorityQueue<Pair> pq = new PriorityQueue<>();
+
 	   
 }

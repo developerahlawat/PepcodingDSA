@@ -5,7 +5,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 
-public class SpreadInfectionGraph {
+public class SpreadInfectionGraph13 {
+	/*
+	 * 
+Using BFS to  	 
+	 */
 	static class Edge {
 	      int src;
 	      int nbr;
@@ -37,7 +41,11 @@ public class SpreadInfectionGraph {
 	      int src = Integer.parseInt(br.readLine());
 	      int t = Integer.parseInt(br.readLine());
 	      
-	      ArrayDeque<Pair> q=new ArrayDeque<>();
+	      getInfected(vtces, graph, src, t);
+	      
+	   }
+	private static void getInfected(int vtces, ArrayList<Edge>[] graph, int src, int t) {
+		ArrayDeque<Pair> q=new ArrayDeque<>();
 	      q.add(new Pair(src, 1));
 	      int[] visited=new int[vtces];
 	      int count=0;
@@ -57,8 +65,7 @@ public class SpreadInfectionGraph {
 			}
 	      }
 	      System.out.println(count);
-	      
-	   }
+	}
 	   public static class Pair{
 		   int v;
 		   int time;

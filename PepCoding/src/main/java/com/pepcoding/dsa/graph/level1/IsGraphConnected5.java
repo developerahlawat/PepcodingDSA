@@ -4,7 +4,10 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class IsGraphConnected {
+import com.pepcoding.dsa.graph.level1.GetConnectedComponentGraph4.Edge;
+
+public class IsGraphConnected5 {
+	//each vertices should have path to all other vertices
 	static class Edge {
 		int src;
 		int nbr;
@@ -16,18 +19,33 @@ public class IsGraphConnected {
 			this.wt = wt;
 		}
 	}
+	
+	private static void getComp(int vtces, ArrayList<Edge>[] graph, ArrayList<ArrayList<Integer>> comps) {
+		boolean[] visited = new boolean[vtces];
+		for (int i = 0; i < vtces; i++) {
+			if (visited[i] == false) {// to not visit those which are visited as part of first vertes neighbours
+				ArrayList<Integer> comp = new ArrayList<>();
+				drawTreeAndGenerateComponent(graph, i, visited, comp);
+				comps.add(comp);
+			}
+		}
+// a connceted graph will only have one single component.
+		System.out.println(comps.size()==1); 
+	}
 
-	private static void getComp(ArrayList<Edge>[] graph, int src, boolean[] visited, ArrayList<Integer> comp) {
+	private static void drawTreeAndGenerateComponent(ArrayList<Edge>[] graph, int src, boolean[] visited, ArrayList<Integer> comp) {
 		
 		visited[src]=true;
 		comp.add(src);
 		for(Edge e:graph[src]) {
 			int nbr=e.nbr;
 			if(visited[nbr]==false)
-				getComp(graph, nbr, visited, comp);
+				drawTreeAndGenerateComponent(graph, nbr, visited, comp);
 		}
 
 	}
+
+
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -50,15 +68,8 @@ public class IsGraphConnected {
 
 		ArrayList<ArrayList<Integer>> comps = new ArrayList<>();
 
-		boolean[] visited = new boolean[vtces];
-		for (int i = 0; i < visited.length; i++) {
-			if (visited[i] == false) {
-				ArrayList<Integer> comp = new ArrayList<>();
-				getComp(graph, i, visited, comp);
-				comps.add(comp);
-			}
-		}
+		getComp(vtces, graph, comps); 
 
-		System.out.println(comps.size()==1); 
+		
 	}
 }

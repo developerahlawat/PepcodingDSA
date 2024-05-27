@@ -4,29 +4,33 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class GetConnectedComponentGraph {
-	static class Edge {
+public class HasPathGraph1 {//dfs
+	public static class Edge {
 		int src;
 		int nbr;
 		int wt;
 
-		Edge(int src, int nbr, int wt) {
+		public Edge(int src, int nbr, int wt) {
 			this.src = src;
 			this.nbr = nbr;
 			this.wt = wt;
 		}
 	}
 
-	private static void getComp(ArrayList<Edge>[] graph, int src, boolean[] visited, ArrayList<Integer> comp) {
-		
-		visited[src]=true;
-		comp.add(src);
-		for(Edge e:graph[src]) {
-			int nbr=e.nbr;
-			if(visited[nbr]==false)
-				getComp(graph, nbr, visited, comp);
-		}
+	private static boolean solution(ArrayList<Edge>[] graph, int src, int dest, boolean[] visited) {
+		if (src == dest)
+			return true;
 
+		visited[src] = true;
+		for (Edge e : graph[src]) {
+			int nbr = e.nbr;
+			if (visited[nbr] == false) {
+				boolean ntod = solution(graph, nbr, dest, visited);
+				if (ntod)
+					return true;
+			}
+		}
+		return false;
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -34,8 +38,10 @@ public class GetConnectedComponentGraph {
 
 		int vtces = Integer.parseInt(br.readLine());
 		ArrayList<Edge>[] graph = new ArrayList[vtces];
+		//ArrayList<ArrayList<Edge>> group = new ArrayList<ArrayList<Edge>>(vtces);
 		for (int i = 0; i < vtces; i++) {
 			graph[i] = new ArrayList<>();
+			//group.add(i,new ArrayList<>());
 		}
 
 		int edges = Integer.parseInt(br.readLine());
@@ -46,20 +52,15 @@ public class GetConnectedComponentGraph {
 			int wt = Integer.parseInt(parts[2]);
 			graph[v1].add(new Edge(v1, v2, wt));
 			graph[v2].add(new Edge(v2, v1, wt));
+			//group.get(v1).add(new Edge(v1, v2, wt));
+			//group.get(v2).add(new Edge(v2, v1, wt));
 		}
 
-		ArrayList<ArrayList<Integer>> comps = new ArrayList<>();
+		int src = Integer.parseInt(br.readLine());
+		int dest = Integer.parseInt(br.readLine());
 
 		boolean[] visited = new boolean[vtces];
-		for (int i = 0; i < visited.length; i++) {
-			if (visited[i] == false) {
-				ArrayList<Integer> comp = new ArrayList<>();
-				getComp(graph, i, visited, comp);
-				comps.add(comp);
-			}
-		}
-
-		System.out.println(comps); 
+		System.out.println(solution(graph, src, dest, visited));
 	}
 
 }

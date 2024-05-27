@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class PrintAllPathGraph {//dfs
+public class PrintAllPathGraph2 {//dfs
 	static class Edge {
 		int src;
 		int nbr;

@@ -2,21 +2,29 @@ package com.pepcoding.dsa.graph.level1;
 
 import java.util.Scanner;
 
-public class KnightsTourGraph {
+public class KnightsTourGraph9 {
+	//jhode ki dhayi chal all moves
+	// using 2d matrix like no of islands
+	//find total number of move a night can travel if we keep is somewhere in chess board
+	// will only print if we will reach all moves
+	
 	 public static void main(String[] args) throws Exception {
 	        Scanner scn=new Scanner(System.in);
 	        int n=scn.nextInt();
-	        int r=scn.nextInt();
-	        int c=scn.nextInt();
+	        int r=scn.nextInt();// row
+	        int c=scn.nextInt();//column
 	        
 	        int[][] chess =new int[n][n];
-	        printKnightsTour(chess, r, c, 1);
+	        printKnightsTour(chess, r, c, 1);// 1 stands for move number
 	    }
 
 	    public static void printKnightsTour(int[][] chess, int r, int c, int move) {
+	    	//if move is out of chess board for that all greater and smaller value of r,c should be checked
+	    	//or visited also is checked
 	      if(r<0||c<0||r>=chess.length||c>=chess.length||chess[r][c]>0)
 	    	  return;
 	      else if(move==chess.length*chess.length) {
+	    	  //max move will be n*n, if its last move then mark it move and remove after display
                      chess[r][c]=move;
                      displayBoard(chess);
                      chess[r][c]=0;

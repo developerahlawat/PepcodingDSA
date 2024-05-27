@@ -3,9 +3,8 @@ package com.pepcoding.dsa.graph.level1;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashSet;
 
-public class HamiltonianPathAndCycle {
+public class GetConnectedComponentGraph4 {
 	static class Edge {
 		int src;
 		int nbr;
@@ -16,6 +15,31 @@ public class HamiltonianPathAndCycle {
 			this.nbr = nbr;
 			this.wt = wt;
 		}
+	}
+	
+	private static void getComp(int vtces, ArrayList<Edge>[] graph, ArrayList<ArrayList<Integer>> comps) {
+		boolean[] visited = new boolean[vtces];
+		for (int i = 0; i < vtces; i++) {
+			if (visited[i] == false) {// to not visit those which are visited as part of first vertes neighbours
+				ArrayList<Integer> comp = new ArrayList<>();
+				drawTreeAndGenerateComponent(graph, i, visited, comp);
+				comps.add(comp);
+			}
+		}
+
+		System.out.println(comps);
+	}
+
+	private static void drawTreeAndGenerateComponent(ArrayList<Edge>[] graph, int src, boolean[] visited, ArrayList<Integer> comp) {
+		
+		visited[src]=true;
+		comp.add(src);
+		for(Edge e:graph[src]) {
+			int nbr=e.nbr;
+			if(visited[nbr]==false)
+				drawTreeAndGenerateComponent(graph, nbr, visited, comp);
+		}
+
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -37,38 +61,11 @@ public class HamiltonianPathAndCycle {
 			graph[v2].add(new Edge(v2, v1, wt));
 		}
 
-		int src = Integer.parseInt(br.readLine());
+		ArrayList<ArrayList<Integer>> comps = new ArrayList<>();
 
-		HashSet<Integer> visited = new HashSet<>();
-		hamiltonian(graph, src, visited, src + "", src);
+		getComp(vtces, graph, comps); 
 	}
 
-	private static void hamiltonian(ArrayList<Edge>[] graph, int src, HashSet<Integer> visited, String psf, int osrc) {
-
-		if (visited.size() == graph.length - 1) {
-			System.out.print(psf);
-
-			boolean closingEdgeFound = false;
-			for (Edge e : graph[src]) {
-				if (e.nbr == osrc) {
-					closingEdgeFound = true;
-					break;
-				}
-			}
-			if (closingEdgeFound)
-				System.out.println("*");
-			else
-				System.out.println(".");
-
-			return;
-		}
-		visited.add(src);
-		for (Edge e : graph[src]) {
-			if (visited.contains(e.nbr) == false)
-				hamiltonian(graph, e.nbr, visited, psf + e.nbr, osrc);
-		}
-		visited.remove(src);
-
-	}
+	
 
 }
