@@ -1,7 +1,9 @@
 package com.pepcoding.dsa.graph.level2;
 
-public class NoOfIslands {
+public class NoOfIslands02 {
 	// leetcode 200. https://leetcode.com/problems/number-of-islands/
+	
+	                   // T--L--D--R
 	static int[] xdir = { -1, 0, 1, 0 };
 	static int[] ydir = { 0, -1, 0, 1 };
 

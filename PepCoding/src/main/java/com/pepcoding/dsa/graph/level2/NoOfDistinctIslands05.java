@@ -5,10 +5,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashSet;
 
-public class NoOfDistinctIslands {
-
-	// lintcode 860. https://www.lintcode.com/problem/860/
-
+public class NoOfDistinctIslands05 {
+	/*
+	 lintcode 860. https://www.lintcode.com/problem/860/
+	 
+Count distinct island on that basis of shape.
+Diffrent shape can have same name if we only take xdr, so take xdzrzz add z while return 	 
+  
+  
+*/
 	static int[] xdir = { -1, 0, 1, 0 };
 	static int[] ydir = { 0, -1, 0, 1 };
 
@@ -23,7 +28,7 @@ public class NoOfDistinctIslands {
 			int c = y + ydir[d];
 
 			if (r >= 0 && r < grid.length && c >= 0 && c < grid[0].length && grid[r][c] == 1) {
-				str.append("" + dir[d]);
+				str.append("" + dir[d]);//adding direction in which we are  going
 				distinctCount(grid, r, c);
 			}
 		}
@@ -36,7 +41,7 @@ public class NoOfDistinctIslands {
 			for (int j = 0; j < grid[0].length; j++) {
 				if (grid[i][j] == 1) {
 					str = new StringBuilder("x");
-					distinctCount(grid, i, j);
+					distinctCount(grid,  i, j);
 					set.add(str.toString());
 				}
 			}

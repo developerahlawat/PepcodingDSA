@@ -2,7 +2,7 @@ package com.pepcoding.dsa.recursion.wayup.level1;
 
 import java.util.Scanner;
 
-public class PrintSubSequence {
+public class PrintSubSequence1 {
 	 public static void main(String[] args) throws Exception {
 	        Scanner scn=new Scanner(System.in);
 	        String str=scn.nextLine();

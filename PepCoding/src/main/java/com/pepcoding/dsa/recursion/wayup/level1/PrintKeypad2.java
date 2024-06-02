@@ -2,7 +2,7 @@ package com.pepcoding.dsa.recursion.wayup.level1;
 
 import java.util.Scanner;
 
-public class PrintKeypad{
+public class PrintKeypad2{
 	public static void main(String[] args) throws Exception {
 	       Scanner scn=new Scanner(System.in);
 	       String str=scn.next();

@@ -3,7 +3,15 @@ package com.pepcoding.dsa.recursion.arraylist.level1;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class MaizePathWithJump {
+public class MaizePathWithJump5 {
+	/*
+	 * 
+Combination of Stair path and Maize path 
+Given a 2d array-maize.
+Need to travel from src->destination,
+can only travel any no of step at a time horizontal or  vertical or diagonal
+find all paths of travel
+	 */
 
 	public static void main(String[] args) throws Exception {
 
@@ -19,6 +27,7 @@ public class MaizePathWithJump {
 //sc - source column
 //dr - destination row
 //dc - destination column
+//mc- move size	
 	public static ArrayList<String> getMazePaths(int sr, int sc, int dr, int dc) {
 		if (sr == dr && sc == dc) {
 			ArrayList<String> bres = new ArrayList<>();
@@ -40,7 +49,7 @@ public class MaizePathWithJump {
 				paths.add("v" + ms + vpath);
 		}
 
-		for (int ms = 1; ms <= dc - sc && ms <= dr - sr; ms++) {
+		for (int ms = 1; ms <= dc - sc && ms <= dr - sr; ms++) {//since diagonal need both jump
 			ArrayList<String> dpaths = getMazePaths(sr + ms, sc + ms, dr, dc);
 			for (String dpath : dpaths)
 				paths.add("d" + ms + dpath);

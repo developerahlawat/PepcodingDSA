@@ -3,7 +3,7 @@ package com.pepcoding.dsa.recursion.arraylist.level1;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Keypad {
+public class Keypad2 {
 	public static void main(String[] args) throws Exception {
        Scanner scn=new Scanner(System.in);
        String str=scn.next();

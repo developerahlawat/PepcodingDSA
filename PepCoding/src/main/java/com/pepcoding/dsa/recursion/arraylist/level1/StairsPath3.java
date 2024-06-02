@@ -3,7 +3,7 @@ package com.pepcoding.dsa.recursion.arraylist.level1;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class StairsPath {
+public class StairsPath3 {
 	public static void main(String[] args) throws Exception {
 
 		Scanner scn = new Scanner(System.in);

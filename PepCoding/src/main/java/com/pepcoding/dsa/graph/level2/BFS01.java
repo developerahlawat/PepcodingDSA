@@ -6,7 +6,7 @@ import java.util.Queue;
 
 import com.pepcoding.dsa.graph.level2.DFS.Edge;
 
-public class BFS {
+public class BFS01 {
 	public static class Edge {
 		int nbr;
 		int wt;

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class BreadthFirstTraversalGraph10 {
 	/*
 	 * Till now all Questions we were doing with recursion was DFS which travel on uler
-	 * 
+	 * Give shortest path in terms of edges
 	 * BFS is similar to Level Order Traversal, will use to queue to solve this
 	 * Remove-MarkStar-Work-AddStar
 	 * rm*wa*

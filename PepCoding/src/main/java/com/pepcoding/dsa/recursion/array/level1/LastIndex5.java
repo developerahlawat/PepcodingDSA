@@ -2,7 +2,7 @@ package com.pepcoding.dsa.recursion.array.level1;
 
 import java.util.Scanner;
 
-public class LastIndex {
+public class LastIndex5 {
 	public static void main(String[] args) throws Exception {
         Scanner scn= new Scanner(System.in);
        int n=scn.nextInt();
@@ -19,7 +19,8 @@ public class LastIndex {
    public static int lastIndex(int[] arr, int idx, int x){
        if(idx==arr.length)
         return -1;
-      
+
+       // should make this call before if as it would be required if we found index first at last.
        int lisa=lastIndex(arr,idx+1,x);
        
        if(lisa==-1)

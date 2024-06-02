@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class BusRoute {
+public class BusRoute07 {
 	// leetcode 815. https://leetcode.com/problems/bus-routes/
 	private static void makeMapWithStandAndBus(int[][] routes, HashMap<Integer, ArrayList<Integer>> map) {
 		for (int r = 0; r < routes.length; r++) { // r -> bus number
@@ -31,7 +31,7 @@ public class BusRoute {
 		HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();
 		makeMapWithStandAndBus(routes, map);
 
-		HashSet<Integer> visBus = new HashSet<>();
+		HashSet<Integer> visBus = new HashSet<>(); 
 		HashSet<Integer> visStand = new HashSet<>();
 		Queue<Integer> qu = new LinkedList<>();
 		qu.add(source);

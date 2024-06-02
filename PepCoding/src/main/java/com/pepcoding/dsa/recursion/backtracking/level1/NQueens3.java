@@ -2,7 +2,12 @@ package com.pepcoding.dsa.recursion.backtracking.level1;
 
 import java.util.Scanner;
 
-public class NQueens {
+public class NQueens3 {
+	/*
+Place N queens in chess board such that no queen kill other.
+ans- 0-1,1-3,2-0,3-2
+Sol- only one queen can sit per column or row
+	 */
 	 public static void main(String[] args) throws Exception {
 	        Scanner scn=new Scanner(System.in);
 	        int n =scn.nextInt();
@@ -41,7 +46,7 @@ public class NQueens {
 	        	 return;
 	         }
 	         
-	         for(int col=0;col<chess.length;col++) {
+	         for(int col=0;col<chess.length;col++) {// as we can only place one in each col
 	        	 if(isQueenSafe(chess,row,col)==true) {
 	        		 //place the queen
 	        		 chess[row][col]=true;

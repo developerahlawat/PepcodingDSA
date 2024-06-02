@@ -2,7 +2,7 @@ package com.pepcoding.dsa.recursion.array.level1;
 
 import java.util.Scanner;
 
-public class DisplayArrayReverse {
+public class DisplayArrayReverse2 {
 	  public static void main(String[] args) throws Exception {
 	       Scanner scn= new Scanner(System.in);
 	        int n=scn.nextInt();

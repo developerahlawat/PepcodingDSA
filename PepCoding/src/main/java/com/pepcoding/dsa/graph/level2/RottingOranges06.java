@@ -6,10 +6,14 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class RottingOranges {
+public class RottingOranges06 {
 	
 
 		 // leetcode 994. https://leetcode.com/problems/rotting-oranges/
+	/*
+Rotting orange in each four directions,need to find out minmum time to find rotten orange
+Since minimum will go with BFS
+	 */
 		    
 		    
 		    static int[] xdir = {-1, 0, 1, 0};
@@ -17,7 +21,7 @@ public class RottingOranges {
 		    public static class OPair {
 		        int r;
 		        int c;
-		        int t;
+		        int t;//time
 
 		        public OPair(int r, int c, int t) {
 		            this.r = r;
@@ -27,17 +31,17 @@ public class RottingOranges {
 		    }
 
 		    public static int orangesRotting(int[][] grid) {
-		        Queue<OPair> qu = new LinkedList<>();
+		        Queue<OPair> qu = new LinkedList<>();//we dont have queue in java so take linkedlist,could have taken dequeue
 
 		        // 1. travel on grid, add rotted orange in queue, and count oranges
 		        int orange = 0;
 		        for(int i = 0; i < grid.length; i++) {
 		            for(int j = 0; j < grid[0].length; j++) {
 		                if(grid[i][j] == 2)
-		                    qu.add(new OPair(i, j, 0));
+		                    qu.add(new OPair(i, j, 0));//adding already rotten oranges
 
 		                if(grid[i][j] == 1 || grid[i][j] == 2)
-		                    orange++;
+		                    orange++;//counting total oranges
 		            }
 		        }
 
@@ -45,15 +49,19 @@ public class RottingOranges {
 		        int time = 0;
 		        
 		        while(qu.size() > 0) {
+		        	//1.remove
 		            OPair rem = qu.remove();
 		            if(grid[rem.r][rem.c] == -2) {
 		                continue;
 		            }
+		            //2.mark
 		            grid[rem.r][rem.c] = -2;
 
+		            //3.work
 		            orange--;
 		            time = rem.t;
 
+		            //4.add neighbour  
 		            for(int d = 0; d < 4; d++) {
 		                int x = rem.r + xdir[d];
 		                int y = rem.c + ydir[d];
@@ -63,6 +71,7 @@ public class RottingOranges {
 		                }
 		            }
 		        }
+		        //to check edge case 
 		        return orange == 0 ? time : -1;
 		    } 
 

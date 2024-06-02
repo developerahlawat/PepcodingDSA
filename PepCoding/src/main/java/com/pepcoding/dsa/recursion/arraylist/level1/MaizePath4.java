@@ -3,7 +3,14 @@ package com.pepcoding.dsa.recursion.arraylist.level1;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class MaizePath {
+public class MaizePath4 {
+	/*
+	 * 
+Given a 2d array-maize.
+Need to travel from src->destination,
+can only travel one step at a time horizontal or one step vertical
+find all paths of travel
+	 */
 	public static void main(String[] args) throws Exception {
            
 		Scanner scn = new Scanner(System.in);

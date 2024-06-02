@@ -31,8 +31,8 @@ Will use DFS, similar to get connected component.
 	
 	 public static void drawTreeAndGenerateComponent(ArrayList<Edge>[] graph, int src, boolean[] vis, Stack<Integer> st) {
 
-	        //we can't print in pre order we had to take stack because as it 
-	        //doesn't work were two components are conecting   
+	        //we can't print in pre order we had to take stack because as it doesn't work were two 
+		    //components are connecting   i.e., when external edge pointing towards component
 	       vis[src] = true;
 	        
 	        for(Edge e : graph[src]) {

@@ -9,7 +9,7 @@ public class DijstraAlgorithm14 {
 	/*
 Find shorted path in terms of weight similar to BFS just use priority queueue .
 For shorted path in terms of edges use BFS.
-
+Dijstra works only in the case of positive edge weight.
 
 	 */
 	

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class NoOfIslands2 {
+public class NoOfIslands204 {
     static int[] xdir = { -1, 0, 1, 0 };
 	static int[] ydir = { 0, -1, 0, 1 };
      class Point {

@@ -2,7 +2,7 @@ package com.pepcoding.dsa.recursion.wayup.level1;
 
 import java.util.Scanner;
 
-public class PrintEncoding {
+public class PrintEncoding7 {
 	public static void main(String[] args) throws Exception {
 		Scanner scn = new Scanner(System.in);
 		String str = scn.next();
@@ -46,7 +46,5 @@ public class PrintEncoding {
 	        	printEncodings(roq12, asf+code);
 	        }
 	    }
-	    	
-             }
-
+     }
 }
