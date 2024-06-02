@@ -2,7 +2,7 @@ package com.pepcoding.dsa.recursion.backtracking.level1;
 
 import java.util.Scanner;
 
-public class KnightsTour {
+public class KnightsTour4 {
 
     public static void main(String[] args) throws Exception {
         Scanner scn=new Scanner(System.in);
